@@ -3,7 +3,7 @@ import Product from "../modules/Product.js";
 const productRoutes = express.Router();
 
 const getProducts = async (req, res) => {
-  const products = await Product.findOne({});
+  const products = await Product.find({});
   res.json(products);
 };
 

@@ -51,7 +51,7 @@ const ProductCard = ({product}) => {
       shadow="lg"
       position="relative"
       >
-      {product.isNew && <Circle size='10px' position='absolute' top={2} right={2} bg='green.300' /> }
+      {product.productIsNew && <Circle size='10px' position='absolute' top={2} right={2} bg='green.300' /> }
       {product.stock <= 0 && <Circle size='10px' position='absolute' top={2} right={2} bg='green.300' />}
       <Image src={product.image} alt={product.name} roundedTop='lg'/>
     
@@ -59,7 +59,7 @@ const ProductCard = ({product}) => {
         {product.stock <= 0 && (
           <Badge rounded='full' px='2' fontSize='0.8em' colorScheme='red'>Sold out</Badge>
         )}
-        {product.isNew && (
+        {product.productIsNew && (
           <Badge rounded='full' px='2' fontSize='0.8em' colorScheme='green'>New</Badge>
         )}
       </Box>
