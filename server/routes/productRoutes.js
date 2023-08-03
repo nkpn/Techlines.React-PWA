@@ -1,5 +1,5 @@
 import express from "express";
-import Product from "../modules/Product.js";
+import Product from "../models/Product.js";
 const productRoutes = express.Router();
 
 const getProducts = async (req, res) => {

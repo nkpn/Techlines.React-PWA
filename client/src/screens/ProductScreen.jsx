@@ -124,7 +124,7 @@ const ProductScreen = () => {
                         <StarIcon color={product.rating >= 5 ? 'orange.500' : 'gray.200'} />
                       </HStack>
                       <Text fontSize='md' fontWeight='bold' ml='4px'>
-                        {product.numberOfReviews} Reviews
+                      {`${product.numReviews} ${product.numReviews === 1 ? "Review" : "Reviews"}`}
                       </Text>
                     </Flex>
                   </Box>
@@ -221,8 +221,9 @@ const ProductScreen = () => {
                 )} 
               </>
             )}*/}
+            {product.numReviews > 0 && (
             <Stack>
-              <Text fontSize='xl' fontWeight='bold'>
+            <Text fontSize='xl' fontWeight='bold'>
                 Reviews
               </Text>
               <SimpleGrid minChildWidth='300px' spacingX='40px' spacingY='20px'>
@@ -245,7 +246,9 @@ const ProductScreen = () => {
                   </Box>
                 ))}
               </SimpleGrid>
+              
             </Stack>
+            )}
           </Box>
         )
       )}
