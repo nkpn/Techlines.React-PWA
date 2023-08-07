@@ -17,19 +17,58 @@ import {
   MenuList,
   MenuItem,
   MenuDivider,
+  Circle,
 } from "@chakra-ui/react";
 import { Link as ReactLink } from "react-router-dom";
-import { HamburgerIcon, CloseIcon, MoonIcon, SunIcon, ChevronDownIcon } from "@chakra-ui/icons";
-import { CgProfile } from 'react-icons/cg';
-import { MdLocalShipping, MdLogout, MdOutlineAdminPanelSettings } from 'react-icons/md';
+import {
+  HamburgerIcon,
+  CloseIcon,
+  MoonIcon,
+  SunIcon,
+  ChevronDownIcon,
+} from "@chakra-ui/icons";
+import { CgProfile } from "react-icons/cg";
+import {
+  MdLocalShipping,
+  MdLogout,
+  MdOutlineAdminPanelSettings,
+} from "react-icons/md";
 import { GiTechnoHeart } from "react-icons/gi";
+import { FiShoppingCart } from "react-icons/fi";
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../redux/actions/userActions";
 
+const ShoppingCartIcon = () => {
+  const cartInfo = useSelector((state) => state.cart);
+  const { cart } = cartInfo;
+  return (
+    <Flex position="relative">
+      <Circle
+        size="15px"
+        position="absolute"
+        top="-7px"
+        left="-5px"
+        bg={useColorModeValue("gray.900", "gray.100")}
+      >
+        <Text fontStyle="italic" as="sub" fontSize="xs" pb='5px' fontWeight='bold' color={useColorModeValue("gray.100", "gray.900")}>
+          {cart.length}
+        </Text>
+      </Circle>
+      <Icon
+        as={FiShoppingCart}
+        h="4"
+        w="7"
+        alignSelf="center"
+        ml="5px"
+      />
+    </Flex>
+  );
+};
+
 const links = [
   { linkName: "Products", path: "/products" },
-  { linkName: "Cart", path: "/cart" },
+  { linkName: <ShoppingCartIcon />, path: "/cart" },
 ];
 
 const NavLink = ({ path, children }) => (
@@ -103,7 +142,7 @@ const Navbar = () => {
           </HStack>
         </HStack>
         <Flex alignItems="center" gap={4}>
-          <NavLink >
+          <NavLink>
             <Icon
               as={colorMode === "light" ? MoonIcon : SunIcon}
               alignSelf="center"
@@ -113,18 +152,18 @@ const Navbar = () => {
 
           {userInfo ? (
             <Menu>
-              <MenuButton px='4' py='2' transition='all 0.3s' as={Button}>
+              <MenuButton px="4" py="2" transition="all 0.3s" as={Button}>
                 {userInfo.name} <ChevronDownIcon />
               </MenuButton>
               <MenuList>
-                <MenuItem as={ReactLink} to='/profile'>
+                <MenuItem as={ReactLink} to="/profile">
                   <CgProfile />
-                  <Text ml='2'>Profile</Text>
+                  <Text ml="2">Profile</Text>
                 </MenuItem>
-                 <MenuItem as={ReactLink} to='/your-orders'>
+                <MenuItem as={ReactLink} to="/your-orders">
                   <MdLocalShipping />
-                  <Text ml='2'>Your Orders</Text>
-                </MenuItem> 
+                  <Text ml="2">Your Orders</Text>
+                </MenuItem>
                 {/* {userInfo.isAdmin === 'true' && (
                   <>
                     <MenuDivider />
@@ -137,8 +176,8 @@ const Navbar = () => {
                 <MenuDivider />
                 <MenuItem onClick={logoutHandler}>
                   <MdLogout />
-                  <Text ml='2'>Logout</Text>
-                </MenuItem> 
+                  <Text ml="2">Logout</Text>
+                </MenuItem>
               </MenuList>
             </Menu>
           ) : (
