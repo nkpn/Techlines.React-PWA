@@ -31,7 +31,6 @@ import { CgProfile } from "react-icons/cg";
 import {
   MdLocalShipping,
   MdLogout,
-  MdOutlineAdminPanelSettings,
 } from "react-icons/md";
 import { GiTechnoHeart } from "react-icons/gi";
 import { FiShoppingCart } from "react-icons/fi";
