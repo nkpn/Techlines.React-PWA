@@ -29,6 +29,12 @@ const createOrder = asyncHandler(async (req, res) => {
   }
 });
 
+const getOrders = async (req, res) => {
+  const orders = await Order.find({});
+  res.json(orders);
+};
+
 orderRoutes.route('/').post(protectRoute, createOrder);
+orderRoutes.route('/').get(protectRoute, getOrders);
 
 export default orderRoutes;
