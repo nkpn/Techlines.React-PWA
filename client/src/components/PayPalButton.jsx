@@ -1,12 +1,30 @@
 import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
-import PAYPAL_CLIENT_ID from '../client_id';
+import { Stack, Spinner } from '@chakra-ui/react';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+// import PAYPAL_CLIENT_ID from '../client_id';
 
 const PayPalButton = ({ total, onPaymentSuccess, onPaymentError, disabled }) => {
+  const [paypalClient, setPaypalClient] = useState(null)
+
+  useEffect(()=>{
+    const paypalKey = async () => {
+      const {data: clientId } = await axios.get('/api/config/paypal');
+      setPaypalClient(clientId);
+    }
+    paypalKey();
+  },[paypalClient])
   return (
-    <PayPalScriptProvider options={{ 'client-id': PAYPAL_CLIENT_ID }}>
+    !paypalClient ? (
+      <Stack direction='row' spacing={4} alignSelf='center'>
+      <Spinner mt={20} thickness='2px' speed='0.65s' emptyColor='gray.200' color='orange.500' size='xl' />
+    </Stack> 
+    ) : (
+    // <PayPalScriptProvider options={{ 'client-id': PAYPAL_CLIENT_ID }}>
+    <PayPalScriptProvider options={{ 'client-id': paypalClient}}>
       <PayPalButtons
         disabled={disabled}
-        forceReRender={[total()]}
+        forceReRender={[total(), paypalClient]}
         createOrder={(data, actions) => {
           return actions.order.create({
             purchase_units: [
@@ -28,6 +46,7 @@ const PayPalButton = ({ total, onPaymentSuccess, onPaymentError, disabled }) => 
         }}
       />
     </PayPalScriptProvider>
+    )
   );
 };
 
