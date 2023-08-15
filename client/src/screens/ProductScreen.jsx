@@ -17,6 +17,9 @@ import {
   AlertIcon,
   AlertDescription,
   AlertTitle,
+  Tooltip,
+  Input,
+  Textarea
 } from "@chakra-ui/react";
 import { MinusIcon, StarIcon, SmallAddIcon } from "@chakra-ui/icons";
 import { BiPackage, BiCheckShield, BiSupport } from "react-icons/bi";
@@ -24,6 +27,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getProduct } from "../redux/actions/productActions";
 import { addCartItem } from "../redux/actions/cartActions";
 import { useEffect, useState } from "react";
+import { createProductReview, resetProductError } from '../redux/actions/productActions';
 
 const ProductScreen = () => {
   const [comment, setComment] = useState('');
@@ -36,23 +40,24 @@ const ProductScreen = () => {
   //redux
   const dispatch = useDispatch();
   const products = useSelector((state) => state.products);
-  const { loading, error, product} = products;
+  const { loading, error, product, reviewSend} = products;
+  
 
   const cartContent = useSelector((state) => state.cart);
   const { cart } = cartContent;
 
-  // const user = useSelector((state) => state.user);
-  // const { userInfo } = user;
+  const user = useSelector((state) => state.user);
+  const { userInfo } = user;
 
   useEffect(() => {
     dispatch(getProduct(id));
 
-    // if (reviewSend) {
-    //   toast({ description: 'Product review saved.', status: 'success', isClosable: true });
-    //   dispatch(resetProductError());
-    //   setReviewBoxOpen(false);
-    // }
-  }, [dispatch, id, cart]);
+    if (reviewSend) {
+      toast({ description: 'Product review saved.', status: 'success', isClosable: true });
+      dispatch(resetProductError());
+      setReviewBoxOpen(false);
+    }
+  }, [dispatch, id, cart, reviewSend]);
 
   const changeAmount = (input) => {
     if (input === 'plus') {
@@ -63,11 +68,11 @@ const ProductScreen = () => {
     }
   };
 
-  // const hasUserReviewed = () => product.reviews.some((item) => item.user === userInfo._id);
+  const hasUserReviewed = () => product.reviews.some((item) => item.user === userInfo._id);
 
-  // const onSubmit = () => {
-  //   dispatch(createProductReview(product._id, userInfo._id, comment, rating, title));
-  // };
+  const onSubmit = () => {
+    dispatch(createProductReview(product._id, userInfo._id, comment, rating, title));
+  };
 
   const addItem = () => {
     dispatch(addCartItem(product._id, amount));
@@ -169,7 +174,7 @@ const ProductScreen = () => {
                 <Image mb='30px' src={product.image} alt={product.name} />
               </Flex>
             </Stack>
-            {/* {userInfo && (
+            {userInfo && (
               <>
                 <Tooltip label={hasUserReviewed() ? 'You have already reviewed this product.' : ''} fontSize='md'>
                   <Button
@@ -220,7 +225,7 @@ const ProductScreen = () => {
                   </Stack>
                 )} 
               </>
-            )}*/}
+            )}
             {product.numReviews > 0 && (
             <Stack>
             <Text fontSize='xl' fontWeight='bold'>
