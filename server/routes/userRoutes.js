@@ -83,7 +83,7 @@ const updateUserProfile = asyncHandler(async (req, res) => {
       createdAt: updatedUser.createdAt,
     });
   } else {
-    res.status(404);
+    res.status(404).send("We could not update user profile.");
     throw new Error('User not found.');
   }
 });
