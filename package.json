@@ -1,0 +1,33 @@
+{
+  "name": "techlines",
+  "version": "1.0.0",
+  "description": "The Backend folder",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "client": "npm run start --prefix client",
+    "start": "node server/index.js",
+    "app": "concurrently npm \"npm run start\" \"npm run client\"",
+    "build": "cd client && npm install && npm run build "
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nkpn/SFCC-React-PWA.git"
+  },
+  "author": "Ilin Nikita",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nkpn/SFCC-React-PWA/issues"
+  },
+  "homepage": "https://github.com/nkpn/SFCC-React-PWA#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "concurrently": "^8.2.0",
+    "dotenv": "^16.1.4",
+    "express": "^4.18.2",
+    "express-async-handler": "^1.2.0",
+    "jsonwebtoken": "^9.0.0",
+    "mongoose": "^7.2.3"
+  }
+}
